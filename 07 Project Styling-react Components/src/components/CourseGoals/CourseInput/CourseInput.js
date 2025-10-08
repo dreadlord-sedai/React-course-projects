@@ -12,6 +12,10 @@ const CourseInput = props => {
 
   const formSubmitHandler = event => {
     event.preventDefault();
+    if (enteredValue.trim().length === 0) {
+      alert('Invalid input, please enter a valid goal!');
+      return;
+    }
     props.onAddGoal(enteredValue);
   };
 
