@@ -1,18 +1,21 @@
-import Header from './components/Header';
-import Form from './components/Form';
-import Table from './components/Table';
+import { useState } from "react";
+import Header from "./components/Header";
+import Form from "./components/Form";
+import Table from "./components/Table";
 
 function App() {
+  const [yearlyData, setYearlyData] = useState([]);
+
   const calculateHandler = (userInput) => {
     // Should be triggered when form is submitted
     // You might not directly want to bind it to the submit event on the form though...
 
     const yearlyData = []; // per-year results
 
-    let currentSavings = +userInput['current-savings']; // feel free to change the shape of this input object!
-    const yearlyContribution = +userInput['yearly-contribution']; // as mentioned: feel free to change the shape...
-    const expectedReturn = +userInput['expected-return'] / 100;
-    const duration = +userInput['duration'];
+    let currentSavings = +userInput["current-savings"]; // feel free to change the shape of this input object!
+    const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
+    const expectedReturn = +userInput["expected-return"] / 100;
+    const duration = +userInput["duration"];
 
     // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
@@ -34,12 +37,12 @@ function App() {
     <div>
       <Header />
 
-      <Form/>
+      <Form onCalculate={calculateHandler} />
 
-      {/* Todo: Show below table conditionally (only once result data is available) */}
-      {/* Show fallback text if no data is available */}
-
-      <Table/>
+      {!yearlyData && (
+        <p style={{ textAlign: "center" }}>No investment calculated yet.</p>
+      )}
+      {yearlyData.length > 0 && <Table data={yearlyData} />}
     </div>
   );
 }
