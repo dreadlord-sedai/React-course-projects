@@ -16,21 +16,26 @@ function App() {
     const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
     const expectedReturn = +userInput["expected-return"] / 100;
     const duration = +userInput["duration"];
-
+    let totalInvestedCapital = currentSavings;
+    let totalInterest = 0;
     // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
+      totalInvestedCapital += yearlyContribution;
+      totalInterest += yearlyInterest;
       yearlyData.push({
         // feel free to change the shape of the data pushed to the array!
         year: i + 1,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         yearlyContribution: yearlyContribution,
+        totalInvestedCapital: totalInvestedCapital,
+        totalInterest: totalInterest,
       });
     }
 
-    // do something with yearlyData ...
+    setYearlyData(yearlyData);
   };
 
   return (
@@ -39,7 +44,7 @@ function App() {
 
       <Form onCalculate={calculateHandler} />
 
-      {!yearlyData && (
+      {yearlyData.length === 0 && (
         <p style={{ textAlign: "center" }}>No investment calculated yet.</p>
       )}
       {yearlyData.length > 0 && <Table data={yearlyData} />}

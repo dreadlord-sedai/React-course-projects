@@ -1,6 +1,6 @@
 import './Table.css';
 
-const Table = () => {
+const Table = (props) => {
   return (
     <table className="result">
       <thead>
@@ -13,13 +13,16 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>YEAR NUMBER</td>
-          <td>TOTAL SAVINGS END OF YEAR</td>
-          <td>INTEREST GAINED IN YEAR</td>
-          <td>TOTAL INTEREST GAINED</td>
-          <td>TOTAL INVESTED CAPITAL</td>
-        </tr>
+
+        {props.data.map((yearData) => (
+          <tr key={yearData.year}>
+            <td>{yearData.year}</td>
+            <td>{yearData.savingsEndOfYear.toFixed(2)}</td>
+            <td>{yearData.yearlyInterest.toFixed(2)}</td>
+            <td>{yearData.totalInterest.toFixed(2)}</td>
+            <td>{yearData.totalInvestedCapital.toFixed(2)}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
