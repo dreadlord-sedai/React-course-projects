@@ -143,11 +143,12 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
+/*
+
 // Destructuring
 
 // Object destructuring
-const book = getBook(2);
-book;
+const book = getBook(3);
 
 // const title = book.title;
 // const author = book.author;
@@ -157,8 +158,81 @@ const { title, author, publicationDate, pages, genres } = book;
 console.log(title, author, genres);
 
 // Array destructuring
+
+// const firstGenre = genres[0];
+// const secondGenre = genres[1];
+
 const [firstGenre, secondGenre] = genres;
 console.log(firstGenre, secondGenre);
 
 const [, , thirdGenre] = genres;
 console.log(thirdGenre);
+
+// Rest operator
+const [firstGenre2, secondGenre2, ...remainingGenres] = genres;
+console.log(firstGenre2, secondGenre2, remainingGenres);
+
+// Spread operator Arrays
+const newGenres = ["epic fantasy", ...genres];
+console.log(newGenres);
+
+// Spread operator Objects
+const updatedBook = {
+  ...book,
+  moviePublicationDate: "2001-12-19",
+  pages: 1210,
+};
+
+console.log(updatedBook);
+
+// Template literals
+const summary = `${title}, is the best book ever written by ${author}.`;
+summary;
+
+// Terneary Operator
+const pagesCount = pages > 1000 ? "over a thousand" : "Less than 1000 ";
+pagesCount;
+console.log(`The book has ${pagesCount} pages.`);
+
+// Arrow functions
+
+// function declaration
+// function getYear(publicationDate) {
+//   return publicationDate.split("-")[0];
+// }
+// function expression
+const getYear = (publicationDate) => publicationDate.split("-")[0];
+
+console.log(getYear(publicationDate));
+
+// Short circuiting
+
+// And operator
+console.log(true && "This is true");
+console.log(false && "This is false");
+
+console.log("Dehemi" && "Some String");
+console.log(0 && "Some String");
+
+// Or operator
+console.log(true || "This is true");
+console.log(false || "This is false");
+
+console.log("Dehemi" || "Some String");
+console.log(0 || "Some String");
+
+// Nullish coalescing operator
+console.log(null ?? "Some String");
+console.log(undefined ?? "Some String");
+console.log(0 ?? "Some String");
+console.log("" ?? "Some String");
+
+//Optional chaining
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  return goodread + librarything;
+}
+
+console.log(getTotalReviewCount(book));
+*/
