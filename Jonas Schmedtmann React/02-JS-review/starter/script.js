@@ -236,3 +236,61 @@ function getTotalReviewCount(book) {
 
 console.log(getTotalReviewCount(book));
 */
+
+// Array Methods
+
+const books = getBooks();
+
+// Map method
+const titles = books.map((book) => book.title);
+console.log(titles);
+
+const essentailInfo = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+}));
+essentailInfo;
+
+// Filter method
+const longBooks = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation)
+  .map((book) => book.title);
+longBooks;
+
+// reduce method
+const totalPages = books.reduce((acc, book) => acc + book.pages, 0);
+totalPages;
+
+// Array Sort method
+const sortedByPages = books
+  .slice()
+  .sort((a, b) => b.pages - a.pages)
+  .map((book) => `${book.title}: ${book.pages} pages`);
+sortedByPages;
+
+// Immutable Array Methods
+const bookToAdd = {
+  id: 6,
+  title: "The Hobbit",
+  publicationDate: "1937-09-21",
+  author: "J. R. R. Tolkien",
+  genres: ["fantasy", "adventure"],
+  hasMovieAdaptation: true,
+  pages: 310,
+  translations: {},
+  reviews: {},
+};
+
+const newBooks = [...books, bookToAdd];
+newBooks;
+
+// Remove a book
+const booksAfterRemoval = newBooks.filter((book) => book.id !== 6);
+booksAfterRemoval;
+
+// Update a book in the array
+const booksAfterUpdate = booksAfterRemoval.map((book) =>
+  book.id === 5 ? { ...book, pages: 900 } : book
+);
+booksAfterUpdate;
