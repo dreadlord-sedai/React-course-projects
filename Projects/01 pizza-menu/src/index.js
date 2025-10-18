@@ -53,7 +53,7 @@ function App() {
       <h1>Hello World!</h1>
       <Header />
       <Menu />
-      <Order />
+      {/* <Order /> */}
       <Footer />
     </div>
   );
@@ -68,68 +68,69 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Menu</h2>
-      <Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-        photoName="pizzas/spinaci.jpg"
-        price={12}
-      />
-      <Pizza
-        name="Pizza Funghi"
-        ingredients="Tomato, mozarella, mushrooms, and onion"
-        photoName="pizzas/funghi.jpg"
-        price={12}
-      />
+      {numPizzas > 0 && (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. All
+            from our stone oven, all organic, all delicious.
+          </p>
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+        </>
+      )}
     </main>
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({pizzaObj}) {
+  console.log(pizzaObj);
+  
   return (
-    <div className="pizza">
-      <img src={props.photoName} alt={props.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""} `}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "Sold Out" : pizzaObj.price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
-function Order() {
+function Order({closeHour}) {
   return (
-    <div>
-      <p>Order your favorite pizza!</p>
+    <div className="order">
+      <p>We're open until {closeHour}:00. Come visit us or order online.</p>
       <button>Order</button>
     </div>
   );
 }
 
 function Footer() {
-  // const hour = new Date().getHours();
-  // const openHour = 8;
-  // const closeHour = 22;
-  // const isOpen = hour >= openHour && hour <= closeHour;
-  // if (!isOpen) {
-  //   return (
-  //     <p>
-  //       Sorry we're closed. We'll be open from {openHour}:00 to {closeHour}:00
-  //     </p>
-  //   );
-  // } else {
-  //   return (
-  //     <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-  //   );
-  // }
+  const hour = new Date().getHours();
+  const openHour = 8;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
 
   return (
     <footer className="footer">
-      <p>We're currently open.</p>
+      {isOpen ? (
+        <div className="order">
+          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>We're still working on our menu. Please come back later.</p>
+      )}
     </footer>
   );
 }
